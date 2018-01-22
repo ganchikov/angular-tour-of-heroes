@@ -6,9 +6,9 @@ import * as path from 'path';
 const app = express();
 
 app.use('/', express.static(path.join(__dirname, '..')));
-app.use('/node_modules', express.static(path.join(__dirname, '..','..', 'node_modules')));
+app.use('/node_modules', express.static(path.join(__dirname, '..', '..', 'node_modules')));
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', '..', 'sources', 'client', 'main.html'))
     console.log('requested landing page');
 });
