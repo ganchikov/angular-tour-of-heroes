@@ -1,5 +1,7 @@
 import * as express from 'express';
 import * as path from 'path';
+import * as bodyParser from 'body-parser';
+
 import { HEROES } from './mock-heroes';
 import {Hero} from '../src/app/hero';
 
@@ -7,6 +9,7 @@ import {Hero} from '../src/app/hero';
 const heroes: Hero[] = HEROES;
 const app = express();
 
+app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, '..', '..', 'dist')));
 app.use('/node_modules', express.static(path.join(__dirname, '..', 'node_modules')));
 
@@ -35,6 +38,22 @@ app.get('/api/heroes/', (req, res) => {
     /*res.sendFile(path.join(__dirname, '..', '..', 'sources', 'client', 'wstest.html')); */
     console.log('requested heroes list');
 });
+
+app.post('/api/heroes', (req, res) => {
+    try {
+        const hero: Hero = new Hero();
+        hero.id = +req.body.id;
+        hero.name = req.body.name;
+        console.log(hero);
+    }
+    catch (err) {
+        console.log('cant parse data: ' + req.body);
+    }
+    finally {
+        res.json(req.body);
+    }
+});
+
 
 
 
