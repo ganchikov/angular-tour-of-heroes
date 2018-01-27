@@ -1,6 +1,4 @@
-import { HEROES } from './mock-heroes';
-import {Hero} from '../src/app/hero';
+export { HEROES } from './mock-heroes';
+export {Hero} from '../src/app/hero';
 
-export default class HeroData {
 
-}

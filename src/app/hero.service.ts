@@ -17,7 +17,7 @@ export class HeroService {
                 private messageService: MessageService
             ) { }
 
-  private heroesUrl = 'api/heroes';
+  private heroesUrl = 'http://localhost:8001/api/heroes';
 
   private log (message: string) {
     this.messageService.add('HeroService: ' + message);
@@ -57,7 +57,10 @@ export class HeroService {
 
   addHero (hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      tap((hero: Hero) => this.log(`added hero id=${hero.id}`)),
+      tap((addedHero: Hero) => {
+        // hero.id = addedHero._id;
+        this.log(`added hero id=${addedHero.id}`);
+      }),
       catchError(this.handleError<any>('addHero'))
     );
   }
