@@ -9,11 +9,11 @@ const dbName = 'heroesdb';
 const heroesCollectionName = 'heroes';
 const countersCollectionName = 'counters';
 
-export class DbManager {
+export class DataService {
     private dbClient: MongoClient;
     private db: Db;
     private activeCollection: Collection<any>;
-    private logger: ConsoleLogger = new ConsoleLogger('DbManager', true);
+    private logger: ConsoleLogger = new ConsoleLogger('DataService', true);
 
     public establishConnection(callback: () => void) {
         const that = this;
@@ -29,7 +29,7 @@ export class DbManager {
 
     private checkConnection(callback: () => void) {
         if (!this.dbClient) {this.establishConnection(callback); } else {callback(); }
-     }
+    }
 
     public closeConnection(): void {
         if (this.dbClient) {

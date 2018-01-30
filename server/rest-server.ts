@@ -1,33 +1,24 @@
 import * as express from 'express';
 import * as path from 'path';
 import * as bodyParser from 'body-parser';
-import { MongoClient, Db, ObjectId} from 'mongodb';
 import {ConsoleLogger} from './logger';
 
 import { HEROES } from './mock-heroes';
 import {Hero} from '../src/app/hero';
 
-import {DbManager} from './dbclient';
+import {DataService} from './DataService';
+import { HeroesDataService } from './NewDataService';
+import {MongoProvider} from './MongoProvider';
 
 
 // import {Server} from "ws";
 // const heroes: Hero[] = HEROES;
 const app = express();
 
-const dbMgr = new DbManager();
+const dataService: HeroesDataService = new HeroesDataService(new MongoProvider());
+
+const dbMgr = new DataService();
 const logger = new ConsoleLogger('express', true);
-
-const url = 'mongodb://localhost:27017';
-const dbName = 'heroesdb';
-const counterCollectionName = 'counters';
-const collectionName = 'heroes';
-let dbClient: MongoClient;
-
-MongoClient.connect(url, function(err, client) {
-    // assert.equal(null, err);
-    console.log(`Successfully connected to db ${client.db.name}`);
-    dbClient = client;
-});
 
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, '..', '..', 'dist')));
@@ -50,6 +41,20 @@ app.get('/api/heroes/:heroId', (req, res) => {
     const heroId = +req.params.heroId;
     logger.Log(`requested hero id: ${heroId}`);
     dbMgr.getHero(heroId, hero => {
+        res.status(200).json(hero);
+        logger.Log(`retrieved hero id: ${hero.id}`);
+    }, err => {
+        const msg = `missing hero for id: ${heroId}`;
+        res.status(404).send(msg);
+        logger.Log(msg);
+    });
+});
+
+app.get('/api/v2/heroes/:heroId', (req, res) => {
+    res.set({'Content-Type' : 'text/json', 'Access-Control-Allow-Origin' : '*'});
+    const heroId = +req.params.heroId;
+    logger.Log(`requested hero id: ${heroId}`);
+    dataService.GetHero(heroId, hero => {
         res.status(200).json(hero);
         logger.Log(`retrieved hero id: ${hero.id}`);
     }, err => {
