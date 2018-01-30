@@ -9,6 +9,6 @@ export class ConsoleLogger {
     Log(message: string) {
         if (this.enabled) {
             console.log(`${this.subject} [${new Date(Date.now()).toLocaleTimeString()}]: ${message}`);
-        ]
+        }
     }
 }

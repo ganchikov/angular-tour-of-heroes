@@ -26,16 +26,16 @@
             "request": "launch",
             "name": "Launch Server",
             "program": "${workspaceFolder}/out-tsc/server/rest-server.js",
-            
+            "skipFiles": [
+                "./node_modules"
+            ]
         },
-    {
-        "type": "chrome",
-        "request": "launch",
-        "name": "Launch Chrome",
-        "url": "http://localhost:4200",
-        "webRoot": "${workspaceFolder}/src",
-        
-    }
-        
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}/src"            
+        }        
     ]
 }
