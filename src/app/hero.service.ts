@@ -23,20 +23,21 @@ export class HeroService {
     this.messageService.add('HeroService: ' + message);
   }
 
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl)
-      .pipe(
-        tap (heroes => this.log('fetched heroes')),
-        catchError(this.handleError('getHeroes', []))
-      );
-  }
-
+ 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.log(error);
       this.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
+  }
+
+  getHeroes(): Observable<Hero[]> {
+    return this.http.get<Hero[]>(this.heroesUrl)
+      .pipe(
+        tap (heroes => this.log('fetched heroes')),
+        catchError(this.handleError('getHeroes', []))
+      );
   }
 
   getHero(id: number): Observable<Hero> {

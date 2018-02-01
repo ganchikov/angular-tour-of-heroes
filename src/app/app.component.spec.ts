@@ -16,27 +16,11 @@ import { AppRoutingModule } from './/app-routing.module';
 import { HeroService } from './hero.service';
 import { MessageService } from './message.service';
 
+import {moduleDef} from './common.spec';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        HeroesComponent,
-        HeroDetailComponent,
-        MessagesComponent,
-        DashboardComponent,
-        HeroSearchComponent
-      ],
-      imports: [
-        BrowserModule,
-        FormsModule,
-        AppRoutingModule,
-        HttpClientModule
-        // HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {dataEncapsulation: false})
-      ],
-      providers: [HeroService, MessageService, {provide: APP_BASE_HREF, useValue: '/'}]
-
-    }).compileComponents();
+    TestBed.configureTestingModule(moduleDef).compileComponents();
   }));
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
