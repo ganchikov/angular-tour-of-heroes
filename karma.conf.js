@@ -4,6 +4,7 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
+    
     frameworks: ['jasmine', '@angular/cli'],
     plugins: [
       require('karma-jasmine'),
@@ -27,6 +28,13 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
+    customLaunchers: {
+      chrome_with_debugger : {
+        base: 'Chrome',
+        flags: ['--remote-debugging-port=9333'],
+        debug: true
+      }
+    },
     browsers: ['Chrome'],
     singleRun: false
   });

@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "chrome",
             "request": "attach",
@@ -36,6 +37,17 @@
             "name": "Launch Chrome",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}/src"            
-        }        
+        },               
+        {
+            "type": "chrome",
+            "request": "attach",
+            "name": "Attach to Karma Chrome",
+            "address": "localhost",
+            "port": 9333,
+            "pathMapping": {
+                "/": "${workspaceFolder}/src/app",
+                "/base/": "${workspaceFolder}/src/app/"
+            }
+        }
     ]
 }
