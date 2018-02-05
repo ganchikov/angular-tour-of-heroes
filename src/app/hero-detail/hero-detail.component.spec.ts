@@ -80,20 +80,26 @@ describe('HeroDetailComponent', () => {
     fixture = TestBed.createComponent(HeroDetailComponent);
     component = fixture.componentInstance;
     heroService = TestBed.get(HeroService);
-    spyOn(heroService, 'getHero').and.returnValue(new Observable(subscriber => {
-      subscriber.next(new Hero('1', 1, 'Hero'));
-    }));
-    spyOn(heroService, 'updateHero').and.returnValue(new Observable(subscriber => {
-      subscriber.next(new Hero('1', 1, 'Hero'));
-    }));
+    spyOn(heroService, 'getHero').and.callFake(argument => {
+      const arg = argument;
+      return new Observable(subscriber => {
+        subscriber.next(arg === 1 ? new Hero('1', 1, 'Hero') : null);
+      });
+    });
 
-    component.hero = {
-      _id: '1',
-       id: 1,
-       name: 'Hero'
-    };
+    // .returnValue(new Observable(subscriber => {
+    //   subscriber.next(new Hero('1', 1, 'Hero'));
+    // }));
+    // spyOn(heroService, 'updateHero').and.returnValue();
+    // }));
+
+    // component.hero = {
+    //   _id: '1',
+    //    id: 1,
+    //    name: 'Hero'
+    // };
     activatedRoute = TestBed.get(ActivatedRoute);
-    activatedRoute.testParamMap = {id: 1};
+    activatedRoute.testParamMap = {id: 2};
     fixture.detectChanges();
   });
 
@@ -109,6 +115,7 @@ describe('HeroDetailComponent', () => {
   });
 
   it('should return relevant hero based on the provided id', () => {
-
+    fixture.detectChanges();
+    expect(component.hero).not.toBeUndefined();
   });
 });
