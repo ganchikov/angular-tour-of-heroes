@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement, Injectable } from '@angular/core';
 import {By} from '@angular/platform-browser';
@@ -99,12 +99,17 @@ describe('HeroDetailComponent', () => {
     //    name: 'Hero'
     // };
     activatedRoute = TestBed.get(ActivatedRoute);
-    activatedRoute.testParamMap = {id: 2};
+    activatedRoute.testParamMap = {id: 1};
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show details if hero is defined', () => {
+    const idFieldRef = fixture.debugElement.query(By.css('#id'));
+    expect(idFieldRef).not.toBeNull();
   });
 
   it('should display hero fields', () => {
@@ -118,4 +123,13 @@ describe('HeroDetailComponent', () => {
     fixture.detectChanges();
     expect(component.hero).not.toBeUndefined();
   });
+
+  it('should hide details if hero is undefined', () => {
+    activatedRoute.testParamMap = {id: 2};
+    fixture.componentInstance.ngOnInit();
+    fixture.detectChanges();
+    const idFieldRef = fixture.debugElement.query(By.css('#id'));
+    expect(idFieldRef).toBeNull();
+  });
+
 });
