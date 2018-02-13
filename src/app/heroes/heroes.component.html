@@ -1,8 +1,8 @@
 <h2>My Heroes</h2>
-<ul class="heroes">
-    <li *ngFor="let hero of heroes">
-        <a routerLink="/detail/{{hero.id}}">
-            <span class="badge">{{hero.id}}</span> {{hero.name}}
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let hero of heroes">
+        <a routerLink="/detail/{{hero.id}}" class="list-group-item-action">
+            <span class="badge badge-primary badge-pill">{{hero.id}}</span> {{hero.name}}
         </a>   
         <button class="delete" title="delete hero"
         (click)="delete(hero)">x</button>     
